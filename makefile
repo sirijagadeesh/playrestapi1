@@ -10,8 +10,9 @@ version:
 	@go version
 
 clean:		## verifying formatting, race and dependency verification.
-clean: version				
-	@gofumpt -w ./..
+clean: version
+	@go fmt ./...				
+	@gofumpt -l -w . 
 	@go vet ./...
 	@go mod tidy
 	@go mod verify
