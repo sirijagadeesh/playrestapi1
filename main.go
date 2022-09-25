@@ -10,7 +10,7 @@ import (
 func main() {
 	log.Println("Hello Ramya")
 
-	cfg, err := config.ReadConfig()
+	cfg, err := config.Read()
 	if err != nil {
 		log.Println(err)
 

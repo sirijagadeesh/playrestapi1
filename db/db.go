@@ -5,7 +5,7 @@ import (
 	"database/sql"
 )
 
-// Operation ...
+// Operation by DB object to access database.
 type Operation interface {
 	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
 	SelectContext(ctx context.Context, dest any, query string, args ...any) error

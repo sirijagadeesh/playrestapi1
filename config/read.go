@@ -20,26 +20,27 @@ const (
 
 var errMissingDBURL = errors.New("missing DB_URL in .env or as environment variable")
 
-// EnvConfig ...
-type EnvConfig struct {
+// env configurations passed by user.
+// these read from .env or environment.
+type env struct {
 	DBURL string `mapstructure:"DB_URL" validate:"required,uri"`
 	Port  int    `mapstructure:"PORT" validate:"required,min=3000,max=9999"`
 }
 
-// Config ...
-type Config struct {
+// App application configuration used by application.
+type App struct {
 	DBConn  *sqlx.DB
 	Address string
 	Timeout time.Duration
 }
 
-// ReadConfig will configs from .env or environment variables.
-func ReadConfig() (*Config, error) {
+// Read will configs from .env or environment variables.
+func Read() (*App, error) {
 	if err := godotenv.Load(); err != nil && !errors.Is(err, os.ErrPermission) {
 		return nil, fmt.Errorf("unable to read config %w", err)
 	}
 
-	readConfig := &EnvConfig{
+	readConfig := &env{
 		DBURL: envString("DB_URL", ""),
 		Port:  envInt64("PORT", port),
 	}
@@ -53,7 +54,7 @@ func ReadConfig() (*Config, error) {
 		return nil, fmt.Errorf("unable to connect to postgresql db %w", err)
 	}
 
-	return &Config{
+	return &App{
 		DBConn:  dbConn,
 		Address: fmt.Sprintf(":%d", readConfig.Port),
 		Timeout: time.Second * time.Duration(timeout),

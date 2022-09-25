@@ -1,6 +1,10 @@
 GET http://localhost:3089/ping
 
 ###
+HEAD http://localhost:3089/ping
+
+
+###
 GET http://localhost:3089/offices
 
 ###

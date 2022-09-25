@@ -15,7 +15,7 @@ import (
 )
 
 // Start server.
-func Start(cfg *config.Config) {
+func Start(cfg *config.App) {
 	log.Printf("%#v\n", cfg.DBConn.Stats())
 
 	defer func() {
@@ -26,14 +26,14 @@ func Start(cfg *config.Config) {
 
 	ech := echo.New()
 	ech.HideBanner = true
-	ech.Use(middleware.Logger(), middleware.Recover())
+	ech.Use(middleware.Logger(), middleware.Recover(), middleware.CORS())
 
-	ech.GET("/ping", handlers.Ping)
+	ech.Match([]string{http.MethodHead, http.MethodGet}, "/ping", handlers.Ping)
 
 	officeHandler := handlers.NewOfficeHandler(cfg.DBConn)
 
-	ech.GET("/offices", officeHandler.GetAllOffices)
-	ech.GET("/office/:office_code", officeHandler.GetOfficeByCode)
+	ech.Match([]string{http.MethodHead, http.MethodGet}, "/offices", officeHandler.GetAllOffices)
+	ech.Match([]string{http.MethodHead, http.MethodGet}, "/office/:office_code", officeHandler.GetOfficeByCode)
 
 	// Start server
 	go func() {
