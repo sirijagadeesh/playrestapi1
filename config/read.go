@@ -42,7 +42,7 @@ func Read() (*App, error) {
 
 	readConfig := &env{
 		DBURL: envString("DB_URL", ""),
-		Port:  envInt64("PORT", port),
+		Port:  envInt("PORT", port),
 	}
 
 	if readConfig.DBURL == "" {
@@ -69,7 +69,7 @@ func envString(key, defaultVal string) string {
 	return defaultVal
 }
 
-func envInt64(key string, defaultVal int) int {
+func envInt(key string, defaultVal int) int {
 	if val, ok := os.LookupEnv(key); ok {
 		value, err := strconv.Atoi(val)
 		if err != nil {
