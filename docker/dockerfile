@@ -1,0 +1,25 @@
+FROM golang:1.19.1 AS builder
+
+WORKDIR /app
+
+RUN go install mvdan.cc/gofumpt@latest
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | \
+    sh -s -- -b $(go env GOPATH)/bin v1.49.0
+
+COPY ["go.mod","go.sum","makefile","./"]
+
+RUN go mod download
+
+COPY [".","./"]
+
+RUN make build
+
+FROM scratch
+WORKDIR /
+COPY --from=builder /etc/passwd /etc/passwd
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder app/bin/playrestapi1 ./playrestapi1
+USER nobody
+ENV PORT=3089 DB_URL=""
+EXPOSE ${PORT}
+ENTRYPOINT ["./playrestapi1"]

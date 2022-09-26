@@ -33,3 +33,8 @@ run:		## run the binary crated.
 run: build
 	@echo "--------- running code ---------"
 	@time ./bin/playrestapi1
+
+image:		## build docker images with name:tag playrestapi1:latest
+image:
+	@docker build -f ./docker/dockerfile -t playrestapi1:latest .
+	@echo "image build completed"
