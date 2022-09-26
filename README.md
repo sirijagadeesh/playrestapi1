@@ -1,6 +1,6 @@
 ## Creating REST API using golang with PostgreSQL as backend.
 
-1. e-commerce dataset from  [demoDB](https://postgrespro.com/education/demodb)
+1. e-commerce dataset from  [dataset DB](https://uibakery.io/sql-playground)
 2. implemented with repository patter and [echo](https://echo.labstack.com/).
 3. [Visual Studio Code (VS code)](https://code.visualstudio.com/) for [go](https://code.visualstudio.com/docs/languages/go)
 4. .rest file for sample api calls (VS code Extension: REST Client)
