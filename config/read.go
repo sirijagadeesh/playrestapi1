@@ -36,7 +36,7 @@ type App struct {
 
 // Read will configs from .env or environment variables.
 func Read() (*App, error) {
-	if err := godotenv.Load(); err != nil && !errors.Is(err, os.ErrPermission) {
+	if err := godotenv.Load(); err != nil && !errors.Is(err, os.ErrNotExist) {
 		return nil, fmt.Errorf("unable to read config %w", err)
 	}
 
