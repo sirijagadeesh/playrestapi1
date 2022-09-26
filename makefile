@@ -38,3 +38,7 @@ image:		## build docker images with name:tag playrestapi1:latest
 image:
 	@docker build -f ./docker/dockerfile -t playrestapi1:latest .
 	@echo "image build completed"
+
+dockerun:	## running application inside docker.
+dockerun:
+	@docker run --env-file=.env --publish=3089:3089 playrestapi1:latest
