@@ -1,17 +1,11 @@
 FROM golang:1.19.1 AS builder
-
 WORKDIR /app
-
-RUN go install mvdan.cc/gofumpt@latest
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | \
+RUN go install mvdan.cc/gofumpt@latest && \
+    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | \
     sh -s -- -b $(go env GOPATH)/bin v1.49.0
-
 COPY ["go.mod","go.sum","makefile","./"]
-
 RUN go mod download
-
 COPY [".","./"]
-
 RUN make build
 
 FROM scratch
