@@ -16,7 +16,7 @@ import (
 const (
 	port    int = 3089
 	timeout int = 10
-	dbTimer int = 10
+	dbTimer int = 60
 )
 
 var errMissingDBURL = errors.New("missing DB_URL in .env or as environment variable")
