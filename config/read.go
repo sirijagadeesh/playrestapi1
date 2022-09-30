@@ -16,6 +16,7 @@ import (
 const (
 	port    int = 3089
 	timeout int = 10
+	dbTimer int = 10
 )
 
 var errMissingDBURL = errors.New("missing DB_URL in .env or as environment variable")
@@ -29,9 +30,10 @@ type env struct {
 
 // App application configuration used by application.
 type App struct {
-	DBConn  *sqlx.DB
-	Address string
-	Timeout time.Duration
+	DBConn    *sqlx.DB
+	Address   string
+	Timeout   time.Duration
+	DBMonitor *time.Ticker
 }
 
 // Read will configs from .env or environment variables.
@@ -55,9 +57,10 @@ func Read() (*App, error) {
 	}
 
 	return &App{
-		DBConn:  dbConn,
-		Address: fmt.Sprintf(":%d", readConfig.Port),
-		Timeout: time.Second * time.Duration(timeout),
+		DBConn:    dbConn,
+		Address:   fmt.Sprintf(":%d", readConfig.Port),
+		Timeout:   time.Second * time.Duration(timeout),
+		DBMonitor: time.NewTicker(time.Second * time.Duration(dbTimer)),
 	}, nil
 }
 

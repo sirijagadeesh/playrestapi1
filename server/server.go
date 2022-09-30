@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -15,18 +14,14 @@ import (
 	"github.com/sirijagadeesh/playrestapi1/handlers"
 )
 
-const dbTicker = 10
-
 // Start server.
 func Start(cfg *config.App) {
 	log.Printf("%#v\n", cfg.DBConn.Stats())
 
 	// monitor database connections.
 	go func() {
-		dbTimer := time.NewTicker(dbTicker * time.Second)
-
 		for {
-			<-dbTimer.C
+			<-cfg.DBMonitor.C
 			log.Printf("%#v\n", cfg.DBConn.Stats())
 		}
 	}()
