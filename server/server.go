@@ -20,8 +20,7 @@ func Start(cfg *config.App) {
 
 	// monitor database connections.
 	go func() {
-		for {
-			<-cfg.DBMonitor.C
+		for range cfg.DBMonitor.C {
 			log.Printf("%#v\n", cfg.DBConn.Stats())
 		}
 	}()
