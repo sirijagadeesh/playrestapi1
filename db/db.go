@@ -5,10 +5,12 @@ import (
 	"database/sql"
 )
 
-// Operation by DB object to access database.
+// Operation interface .. database minimum these need to be implemented.
 type Operation interface {
+	Close() error
 	ExecContext(ctx context.Context, query string, args ...any) (sql.Result, error)
 	SelectContext(ctx context.Context, dest any, query string, args ...any) error
+	Stats() sql.DBStats
 }
 
 // Queries ...
