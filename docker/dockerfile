@@ -3,7 +3,7 @@ WORKDIR /app
 RUN go install mvdan.cc/gofumpt@latest && \
     curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | \
     sh -s -- -b $(go env GOPATH)/bin v1.49.0
-COPY ["go.mod","go.sum","makefile","./"]
+COPY ["go.mod","go.sum","./"]
 RUN go mod download
 COPY [".","./"]
 RUN make build
