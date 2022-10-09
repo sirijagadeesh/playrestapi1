@@ -12,7 +12,7 @@ Dependent Programs:
 3. [golangci-lint](https://golangci-lint.run/) enforce the best practices/rules.
 4. [make](https://www.gnu.org/software/make/) usually available in linux/unix based systems.
 
-command available/help:
+Command available/help:
 
 1.  Below command will list available targets.
 ```console
