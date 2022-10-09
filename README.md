@@ -7,6 +7,6 @@
 
 Dependent Programs:
 
-1. [go](https://go.dev/)
-2. [gofumpt](https://github.com/mvdan/gofumpt/)
-3. [golangci-lint](https://golangci-lint.run/)
+1. [go](https://go.dev/) 
+2. [gofumpt](https://github.com/mvdan/gofumpt/) used for formatting code.
+3. [golangci-lint](https://golangci-lint.run/) linter enforce the best practices/rules.
